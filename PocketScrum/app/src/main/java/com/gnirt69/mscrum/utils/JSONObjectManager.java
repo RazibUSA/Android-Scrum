@@ -44,24 +44,44 @@ public class JSONObjectManager {
 
        for(int i = 0; i < userArr.length(); i++) {
            JSONObject obj = userArr.getJSONObject(i);
-           User user = new User();
 
-            user.setFirstName(obj.getString(MSConstants.KEY_FIRSTNAME));
-            user.setLastName(obj.getString(MSConstants.KEY_LASTNAME));
-            user.setEmail(obj.getString(MSConstants.KEY_EMAIL));
-            user.setId(obj.getInt(MSConstants.KEY_ID));
-            user.setPassword(obj.getString(MSConstants.KEY_PASSWORD));
-
-           JSONObject roleObj = obj.getJSONObject(MSConstants.KEY_ROLE);
-            Role role = new Role();
-           role.setId(roleObj.getInt(MSConstants.KEY_ID));
-           role.setName(roleObj.getString(MSConstants.KEY_NAME));
-           user.setRole(role);
-           userList.add(user);
+           userList.add(parseUser(obj));
 
         }
 
         return userList;
     }
 
+    public static User parseUser(JSONObject obj)throws JSONException{
+        User user = new User();
+
+        user.setFirstName(obj.getString(MSConstants.KEY_FIRSTNAME));
+        user.setLastName(obj.getString(MSConstants.KEY_LASTNAME));
+        user.setEmail(obj.getString(MSConstants.KEY_EMAIL));
+        user.setId(obj.getInt(MSConstants.KEY_ID));
+//            user.setPassword(obj.getString(MSConstants.KEY_PASSWORD));
+
+        JSONObject roleObj = obj.getJSONObject(MSConstants.KEY_ROLE);
+        Role role = new Role();
+        role.setId(roleObj.getInt(MSConstants.KEY_ID));
+        role.setName(roleObj.getString(MSConstants.KEY_NAME));
+        user.setRole(role);
+
+        return user;
+
+    }
+
+    public static int parseUserType(JSONObject indObj) throws JSONException{
+
+        int roleID=0;
+
+        if(indObj != null){
+
+            JSONObject roleObj = indObj.getJSONObject(MSConstants.KEY_ROLE);
+            roleID = roleObj.getInt(MSConstants.KEY_ID);
+
+        }
+
+        return roleID;
+    }
 }

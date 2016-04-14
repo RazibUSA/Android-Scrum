@@ -50,7 +50,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _emailText.setText("test1234@gmail.com");
+        _emailText.setText("k@mum.edu");
         _passwordText.setText("123456");
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class LoginActivity extends ActionBarActivity {
             return;
         }
 
-        _loginButton.setEnabled(false);
+//        _loginButton.setEnabled(false);
 
 //        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
 //                R.style.AppTheme_Dark_Dialog);
@@ -136,17 +136,32 @@ public class LoginActivity extends ActionBarActivity {
                             int status = response.getInt(MSConstants.KEY_STATUSCODE);
                             if(status ==1) {
                                 JSONObject userData  = response.getJSONObject("data");
-                                JSONArray userList = (JSONArray) userData.get("userList");
-                                DataHolder.getInstance().setUserList(JSONObjectManager.parseUserListData(userList));
+
+                                if(userData.has("userList")) {
+                                    JSONArray userList = (JSONArray) userData.get("userList");
+                                    if (userList != null) {
+                                        DataHolder.getInstance().setUserList(JSONObjectManager.parseUserListData(userList));
+                                    }
+
+                                }
                                 //permission list
                                 //save token n user type
+
                                 String token = userData.getString("token");
 //                                JSONObject role = userData.
-                                int userType = 1;
-                                SharedPreferences sharedpreferences = getSharedPreferences(MSConstants.MSPREFERENCES, Context.MODE_PRIVATE);
-                                Utils.Save(sharedpreferences, token, userType);
-                                onLoginSuccess();
-                                progressDialog.dismiss();
+                                DataHolder.getInstance().setLogger(JSONObjectManager.parseUser(userData.getJSONObject("individual")));
+                                int userType = JSONObjectManager.parseUserType(userData.getJSONObject("individual"));
+
+                               if(userType > 0) {
+                                   SharedPreferences sharedpreferences = getSharedPreferences(MSConstants.MSPREFERENCES, Context.MODE_PRIVATE);
+                                   Utils.Save(sharedpreferences, token, userType);
+                                   onLoginSuccess(userType);
+                                   progressDialog.dismiss();
+                               } else {
+                                   progressDialog.dismiss();
+                                   Toast.makeText(getBaseContext(), "Could't find Role", Toast.LENGTH_LONG).show();
+                               }
+
 
                             }else {
                                 Toast.makeText(getBaseContext(), "Email or Password is Incorrect", Toast.LENGTH_LONG).show();
@@ -235,11 +250,11 @@ public class LoginActivity extends ActionBarActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
+    public void onLoginSuccess(int userType) {
         _loginButton.setEnabled(true);
         Intent intent=new Intent();
-//        intent.putExtra("MESSAGE",message);
-        setResult(2,intent);
+        intent.putExtra("USERTYPE",userType);
+        setResult(200,intent);
         finish();
     }
 

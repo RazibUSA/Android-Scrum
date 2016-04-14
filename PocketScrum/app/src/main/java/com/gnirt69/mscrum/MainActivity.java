@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
         if(!signin) {
             Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, 2);
+            startActivityForResult(intent, 200);
 //            startActivity(intent);
         }
 
@@ -110,10 +111,17 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
-        if(requestCode==2)
+        // check if the request code is same as what is passed  here it is 200
+        if(requestCode==200)
         {
-            replaceFragment(0);
+            int roleID =  data.getIntExtra("USERTYPE",0);
+
+            Log.d("RoleID", ""+roleID);
+
+            if(roleID > 0) {
+                replaceFragment(roleID - 1);
+            }
+
         }
     }
 

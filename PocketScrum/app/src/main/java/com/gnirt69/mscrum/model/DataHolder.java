@@ -9,6 +9,15 @@ import java.util.List;
 public class DataHolder {
         private List<User> userList = new ArrayList<>();
         private List<Project> projectList = new ArrayList<>();
+        private User logger = new User();
+
+    public User getLogger() {
+        return logger;
+    }
+
+    public void setLogger(User logger) {
+        this.logger = logger;
+    }
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
