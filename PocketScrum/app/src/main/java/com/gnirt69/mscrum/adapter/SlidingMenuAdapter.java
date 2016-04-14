@@ -12,9 +12,7 @@ import com.gnirt69.mscrum.model.ItemSlideMenu;
 
 import java.util.List;
 
-/**
- * Created by NgocTri on 10/18/2015.
- */
+
 public class SlidingMenuAdapter extends BaseAdapter {
 
     private Context context;

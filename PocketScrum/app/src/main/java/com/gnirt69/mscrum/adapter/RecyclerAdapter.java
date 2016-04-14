@@ -17,7 +17,7 @@ import com.gnirt69.mscrum.model.User;
 
 import java.util.List;
 
-import static com.gnirt69.mscrum.adapter.RecyclerAdapter.ViewHolder.*;
+
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
@@ -47,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //setting data to view holder elements
         viewHolder.name.setText("Name:"+friends.get(position).getFirstName() + " " + friends.get(position).getLastName());
-//        ViewHolder.userIDView.setTest("ID:");
+        viewHolder.userIDView.setText("ID:"+friends.get(position).getId());
         viewHolder.emailView.setText("E-Mail:"+friends.get(position).getEmail());
         viewHolder.passView.setText("Password:"+friends.get(position).getPassword());
 
@@ -180,10 +180,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView userIDView;
+        private TextView userIDView;
         private ImageView imageView;
         private TextView name;
-        private TextView userID;
         private TextView emailView;
         private TextView passView;
         private View container;

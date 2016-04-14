@@ -22,24 +22,24 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:padding="5dp"
-                android:src="@drawable/project" />
+                android:src="@drawable/sprint" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/pro_name"
+                    android:id="@+id/sprint_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Natok 420"
+                    android:text="Sprint 1"
                     android:textColor="@android:color/holo_blue_dark" />
 
                 <TextView
                     android:id="@+id/start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/pro_name"
+                    android:layout_below="@+id/sprint_name"
                     android:text="Start Date:02/06/2016"
                     android:textColor="@android:color/holo_green_dark"
                     android:textStyle="bold" />
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/start_date"
-                    android:text="End Date: 03/06/2016"
+                    android:text="End Date:02/14/2016"
                     android:textColor="@android:color/holo_green_dark"
                     android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/end_date"
-                    android:text="Sm: Gandu"
+                    android:text="No of US: 6"
                     android:textColor="@android:color/holo_green_dark"
                     android:textStyle="bold" />
 
@@ -91,13 +91,7 @@
                         android:padding="5dp"
                         android:background="@null"
                         android:src="@drawable/chart_icon" />
-                <ImageButton
-                    android:id="@+id/add_sm"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:background="@null"
-                    android:src="@drawable/user_icon" />
+
                 <ImageButton
                     android:id="@+id/back_log"
                     android:layout_width="40dp"
