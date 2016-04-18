@@ -14,10 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,29 +23,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gnirt69.mscrum.R;
-import com.gnirt69.mscrum.adapter.RecyclerAdapter;
 import com.gnirt69.mscrum.adapter.RecyclerAdapterPro;
-import com.gnirt69.mscrum.comm.CustomJSONObjectRequest;
 import com.gnirt69.mscrum.constant.MSConstants;
 import com.gnirt69.mscrum.model.DataHolder;
 import com.gnirt69.mscrum.model.Project;
-import com.gnirt69.mscrum.model.Role;
-import com.gnirt69.mscrum.model.User;
 import com.gnirt69.mscrum.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Fragment2 extends Fragment {
+public class Fragment4 extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerAdapterPro adapter;
     private FloatingActionButton fab;
@@ -69,7 +58,7 @@ public class Fragment2 extends Fragment {
     private String userTypeStr;
 
 
-    public Fragment2() {
+    public Fragment4() {
     }
 
     @Override

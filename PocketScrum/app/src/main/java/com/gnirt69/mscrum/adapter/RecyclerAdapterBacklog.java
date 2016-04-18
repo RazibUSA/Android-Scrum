@@ -12,22 +12,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gnirt69.mscrum.MainActivity;
 import com.gnirt69.mscrum.R;
-import com.gnirt69.mscrum.model.Project;
 import com.gnirt69.mscrum.model.User;
+import com.gnirt69.mscrum.model.UserStory;
 
 import java.util.List;
 
 
-public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.ViewHolder> {
+public class RecyclerAdapterBacklog extends RecyclerView.Adapter<RecyclerAdapterBacklog.ViewHolder> {
 
-    private List<Project> projectList;
+    private List<UserStory> friends;
     private Activity activity;
 
 
-    public RecyclerAdapterPro(Activity activity, List<Project> projects) {
-        this.projectList = projects;
+    public RecyclerAdapterBacklog(Activity activity, List<UserStory> friends) {
+        this.friends = friends;
         this.activity = activity;
     }
 
@@ -36,7 +35,7 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
 
         //inflate your layout and pass it to view holder
         LayoutInflater inflater = activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_recycler_pro, viewGroup, false);
+        View view = inflater.inflate(R.layout.item_recycler, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
 
@@ -47,14 +46,11 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         //setting data to view holder elements
-        viewHolder.proName.setText("Project Name:"+ projectList.get(position).getName());
-        viewHolder.startDate.setText("Start Date: 02/10/2016");
-        viewHolder.endDate.setText("End Date: 06/10/2016");
-        viewHolder.proSM.setText("Assigned To:None");
-        // Need work later razib
-//        viewHolder.startDate.setText("Start Date:"+ projectList.get(position).getStartDate().toString());
-//        viewHolder.endDate.setText("End Date:"+ projectList.get(position).getEndDate().toString());
-//        viewHolder.proSM.setText("Scrum Master:"+projectList.get(position).getManagedBy().getFirstName());
+        viewHolder.titleView.setText("Name:"+friends.get(position).getTitle());
+        viewHolder.estimateView.setText("Estimate:"+friends.get(position).getEstimation());
+        viewHolder.assignView.setText("Assign: None");
+        viewHolder.SprintView.setText("Sprint: Not Yet");
+
 
 
         viewHolder.edit.setOnClickListener(new View.OnClickListener(){
@@ -94,8 +90,7 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
 
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing but close the dialog
-//                removeAt(position);
-                swtichToBacklog();
+                removeAt(position);
                 dialog.dismiss();
             }
 
@@ -114,23 +109,47 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
         alert.show();
     }
 
-    public void swtichToBacklog(){
-
-        ((MainActivity)activity). replaceFragment(2);
-    }
 
     public void removeAt(int position) {
-        projectList.remove(position);
+        friends.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, projectList.size());
+        notifyItemRangeChanged(position, friends.size());
     }
 
+
+    private void setDataToView(TextView name, TextView job, ImageView genderIcon, int position) {
+        name.setText("Name:"+friends.get(position).getTitle());
+//        job.setText("E-Mail:"+friends.get(position).getEmail());
+
+
+
+    }
 
     @Override
     public int getItemCount() {
-        return (null != projectList ? projectList.size() : 0);
+        return (null != friends ? friends.size() : 0);
     }
 
+    private View.OnClickListener onClickListener(final int position) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(activity);
+                dialog.setContentView(R.layout.item_recycler);
+                dialog.setTitle("Position " + position);
+                dialog.setCancelable(true); // dismiss when touching outside Dialog
+
+                // set the custom dialog components - texts and image
+                TextView name = (TextView) dialog.findViewById(R.id.user_name);
+                TextView job = (TextView) dialog.findViewById(R.id.user_id);
+                ImageView icon = (ImageView) dialog.findViewById(R.id.image);
+
+                setDataToView(name, job, icon, position);
+
+                dialog.show();
+            }
+        };
+    }
 
     /**
      * View holder to display each RecylerView item
@@ -139,28 +158,22 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
 
 
         private ImageView imageView;
-        private TextView proName;
-        private TextView startDate;
-        private TextView endDate;
-        private TextView proSM;
-
+        private TextView titleView;
+        private TextView estimateView;
+        private TextView assignView;
+        private TextView SprintView;
         private View container;
-        private ImageButton bdChart;
-        private ImageButton assignSM;
         private ImageButton edit;
         private ImageButton delete;
 
         public ViewHolder(View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
-            proName = (TextView) view.findViewById(R.id.pro_name);
-            startDate = (TextView) view.findViewById(R.id.start_date);
-            endDate = (TextView) view.findViewById(R.id.end_date);
-            proSM = (TextView) view.findViewById(R.id.pro_sm);
-
+            titleView = (TextView) view.findViewById(R.id.title_name);
+            estimateView = (TextView) view.findViewById(R.id.esti_date);
+            assignView = (TextView) view.findViewById(R.id.assign_to);
+            SprintView = (TextView) view.findViewById(R.id.sprint_to);
             container = view.findViewById(R.id.card_view);
-            bdChart =(ImageButton)view.findViewById(R.id.chart_bd);
-            assignSM =(ImageButton)view.findViewById(R.id.add_sm);
             edit =(ImageButton)view.findViewById(R.id.edit);
             delete =(ImageButton)view.findViewById(R.id.delete);
         }

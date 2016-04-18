@@ -50,7 +50,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _emailText.setText("k@mum.edu");
+        _emailText.setText("po1@gmail.com");
         _passwordText.setText("123456");
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -136,23 +136,49 @@ public class LoginActivity extends ActionBarActivity {
                             int status = response.getInt(MSConstants.KEY_STATUSCODE);
                             if(status ==1) {
                                 JSONObject userData  = response.getJSONObject("data");
+                                DataHolder.getInstance().setLogger(JSONObjectManager.parseUser(userData.getJSONObject("individual")));
+                                int userType = JSONObjectManager.parseUserType(userData.getJSONObject("individual"));
 
-                                if(userData.has("userList")) {
-                                    JSONArray userList = (JSONArray) userData.get("userList");
-                                    if (userList != null) {
-                                        DataHolder.getInstance().setUserList(JSONObjectManager.parseUserListData(userList));
+                                if(userType > 0) {
+
+                                    switch(userType){
+
+                                        case 1:  //System admin
+                                            if(userData.has("userList")) {
+                                                JSONArray userList = (JSONArray) userData.get("userList");
+                                                if (userList != null && userList.length() > 0) {
+                                                    DataHolder.getInstance().setUserList(JSONObjectManager.parseUserListData(userList));
+                                                }
+
+                                            }
+                                            break;
+                                        case 2:  //po
+                                            if(userData.has("projectList")) {
+                                                JSONArray projectList = (JSONArray) userData.get("projectList");
+                                                if (projectList != null) {
+//                                                    DataHolder.getInstance().setUserList(JSONObjectManager.parseUserListData(userList));
+                                                    DataHolder.getInstance().setProjectList(JSONObjectManager.parseProjectData(projectList));
+                                                }
+                                            }
+                                        case 3:  //Sm
+                                        case 4:  //dev
+                                        default:
+                                            Log.d("User Type:", "Not a valid User");
+
                                     }
 
-                                }
+
+
+
+
                                 //permission list
                                 //save token n user type
 
                                 String token = userData.getString("token");
 //                                JSONObject role = userData.
-                                DataHolder.getInstance().setLogger(JSONObjectManager.parseUser(userData.getJSONObject("individual")));
-                                int userType = JSONObjectManager.parseUserType(userData.getJSONObject("individual"));
 
-                               if(userType > 0) {
+
+
                                    SharedPreferences sharedpreferences = getSharedPreferences(MSConstants.MSPREFERENCES, Context.MODE_PRIVATE);
                                    Utils.Save(sharedpreferences, token, userType);
                                    onLoginSuccess(userType);

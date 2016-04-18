@@ -2,6 +2,7 @@ package com.gnirt69.mscrum.utils;
 
 import com.gnirt69.mscrum.constant.MSConstants;
 import com.gnirt69.mscrum.model.DataModel;
+import com.gnirt69.mscrum.model.Project;
 import com.gnirt69.mscrum.model.Role;
 import com.gnirt69.mscrum.model.User;
 
@@ -10,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -84,4 +86,45 @@ public class JSONObjectManager {
 
         return roleID;
     }
+
+    public static List<Project> parseProjectData(JSONArray projectList) throws JSONException{
+
+        List<Project> proList = new ArrayList<>();
+
+        for(int i = 0; i < projectList.length(); i++) {
+            JSONObject obj = projectList.getJSONObject(i);
+
+            proList.add(parseProject(obj));
+
+        }
+
+        return proList;
+
+
+    }
+
+public static Project parseProject(JSONObject obj) throws JSONException{
+
+
+//            "id": 2,
+//            "name": "MumScrum",
+//            "startDate": null,
+//            "endDate": null,
+//            "owner": null,
+//            "managedBy": null
+
+            Project pro = new Project();
+
+            pro.setId(obj.getLong("id"));
+            pro.setName(obj.getString("name"));
+
+//            pro.setStartDate(new Date());
+
+
+
+    return pro;
+
+}
+
+
 }

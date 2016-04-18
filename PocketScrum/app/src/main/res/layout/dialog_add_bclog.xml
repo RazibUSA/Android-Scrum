@@ -10,15 +10,14 @@
             android:orientation="horizontal">
 
         <TextView
-                android:id="@+id/top_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:gravity="center"
-                android:text="Name:" />
+                android:text="Title:" />
 
         <EditText
-                android:id="@+id/project_name"
+                android:id="@+id/us_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
@@ -28,63 +27,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:gravity="center"
-            android:text="Start Date:" />
-    </LinearLayout>
+            android:text="Description:" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <DatePicker
-            android:id="@+id/dp_start"
+        <EditText
+            android:id="@+id/us_description"
             android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="100dp"
-            android:calendarViewShown="false"/>
-
+            android:layout_height="150dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:layout_weight="0.7"
+            android:ems="150"
+            android:gravity="left|top"
+            android:hint="Write User story Detail."
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="5dip"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:gravity="center"
-            android:text="End Date:" />
-    </LinearLayout>
+            android:text="Estimation:" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <DatePicker
-            android:id="@+id/dp_end"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_height="100dp"
-            android:calendarViewShown="false"/>
+        <EditText
+            android:id="@+id/us_estimation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:inputType="text" />
     </LinearLayout>
 
        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-           android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button

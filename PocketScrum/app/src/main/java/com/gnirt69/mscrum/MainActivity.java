@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gnirt69.mscrum.activity.LoginActivity;
 import com.gnirt69.mscrum.adapter.SlidingMenuAdapter;
@@ -37,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private static boolean signin  = false;
+    private TextView textViewTitle;
 
 
     @Override
@@ -65,7 +68,12 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Set title
-        setTitle(listSliding.get(0).getTitle());
+//        setTitle(listSliding.get(0).getTitle());
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.abs_layout);
+
+        textViewTitle = (TextView) findViewById(R.id.mytext);
+
         //item selected
         listViewSliding.setItemChecked(0, true);
         //Close menu
@@ -150,16 +158,19 @@ public class MainActivity extends ActionBarActivity {
 
     //Create method replace fragment
 
-    private void replaceFragment(int pos) {
+    public void replaceFragment(int pos) {
         Fragment fragment = null;
         switch (pos) {
             case 0:
+                textViewTitle.setText("User");
                 fragment = new Fragment1();
                 break;
             case 1:
+                textViewTitle.setText("Project");
                 fragment = new Fragment2();
                 break;
             case 2:
+                textViewTitle.setText("User Story");
                 fragment = new Fragment3();
                 break;
             default:

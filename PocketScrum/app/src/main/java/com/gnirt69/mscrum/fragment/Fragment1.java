@@ -1,5 +1,5 @@
 package com.gnirt69.mscrum.fragment;/**
- * Created by NgocTri on 10/18/2015.
+ * Created by razib on 10/18/2015.
  */
 
 import android.app.Dialog;

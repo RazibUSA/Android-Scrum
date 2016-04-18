@@ -12,7 +12,7 @@
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:text="@string/first_name" />
 
@@ -20,7 +20,7 @@
                 android:id="@+id/first_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.7"
                 android:inputType="textCapSentences" />
     </LinearLayout>
 
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:gravity="center"
             android:text="@string/last_name" />
 
@@ -40,7 +40,7 @@
             android:id="@+id/last_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.7"
             android:inputType="textCapSentences" />
     </LinearLayout>
 
@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:gravity="center"
             android:text="@string/email" />
 
@@ -60,7 +60,7 @@
             android:id="@+id/email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.7"
             android:inputType="text" />
     </LinearLayout>
 
@@ -72,7 +72,7 @@
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:text="@string/password" />
 
@@ -80,7 +80,7 @@
                 android:id="@+id/password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.7"
                 android:inputType="text" />
     </LinearLayout>
 
@@ -93,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:gravity="center"
             android:text="@string/gender" />
 
@@ -101,7 +101,7 @@
             android:id="@+id/gender"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.7"
             android:inputType="text" />
     </LinearLayout>
 

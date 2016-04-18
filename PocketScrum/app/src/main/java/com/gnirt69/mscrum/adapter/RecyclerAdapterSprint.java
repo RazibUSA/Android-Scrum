@@ -12,21 +12,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gnirt69.mscrum.MainActivity;
 import com.gnirt69.mscrum.R;
 import com.gnirt69.mscrum.model.Project;
-import com.gnirt69.mscrum.model.User;
 
 import java.util.List;
 
 
-public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.ViewHolder> {
+public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterSprint.ViewHolder> {
 
     private List<Project> projectList;
     private Activity activity;
 
 
-    public RecyclerAdapterPro(Activity activity, List<Project> projects) {
+    public RecyclerAdapterSprint(Activity activity, List<Project> projects) {
         this.projectList = projects;
         this.activity = activity;
     }
@@ -94,8 +92,7 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
 
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing but close the dialog
-//                removeAt(position);
-                swtichToBacklog();
+                removeAt(position);
                 dialog.dismiss();
             }
 
@@ -114,10 +111,6 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
         alert.show();
     }
 
-    public void swtichToBacklog(){
-
-        ((MainActivity)activity). replaceFragment(2);
-    }
 
     public void removeAt(int position) {
         projectList.remove(position);
