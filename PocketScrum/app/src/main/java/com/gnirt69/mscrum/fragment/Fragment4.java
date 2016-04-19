@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.gnirt69.mscrum.MainActivity;
 import com.gnirt69.mscrum.R;
 import com.gnirt69.mscrum.adapter.RecyclerAdapterPro;
 import com.gnirt69.mscrum.constant.MSConstants;
@@ -84,7 +85,7 @@ public class Fragment4 extends Fragment {
 
         fab.setOnClickListener(onAddingListener());
 
-
+        ((MainActivity)getActivity()).setTitle("Sprint");
 
 
         return rootView;

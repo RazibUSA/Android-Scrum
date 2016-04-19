@@ -19,6 +19,7 @@ import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gnirt69.mscrum.MainActivity;
 import com.gnirt69.mscrum.R;
 import com.gnirt69.mscrum.adapter.RecyclerAdapter;
 import com.gnirt69.mscrum.adapter.RecyclerAdapterBacklog;
@@ -84,7 +85,7 @@ public class Fragment3 extends Fragment {
 
         fab.setOnClickListener(onAddingListener());
 
-
+        ((MainActivity)getActivity()).setTitle("Backlog");
 
 
         return rootView;

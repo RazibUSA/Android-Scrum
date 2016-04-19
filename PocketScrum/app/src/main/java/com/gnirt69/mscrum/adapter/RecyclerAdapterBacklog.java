@@ -35,7 +35,7 @@ public class RecyclerAdapterBacklog extends RecyclerView.Adapter<RecyclerAdapter
 
         //inflate your layout and pass it to view holder
         LayoutInflater inflater = activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_recycler, viewGroup, false);
+        View view = inflater.inflate(R.layout.item_recycler_backlog, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
 
@@ -50,6 +50,7 @@ public class RecyclerAdapterBacklog extends RecyclerView.Adapter<RecyclerAdapter
         viewHolder.estimateView.setText("Estimate:"+friends.get(position).getEstimation());
         viewHolder.assignView.setText("Assign: None");
         viewHolder.SprintView.setText("Sprint: Not Yet");
+        viewHolder.statusView.setText("Status: To-Do");
 
 
 
@@ -162,6 +163,7 @@ public class RecyclerAdapterBacklog extends RecyclerView.Adapter<RecyclerAdapter
         private TextView estimateView;
         private TextView assignView;
         private TextView SprintView;
+        private TextView statusView;
         private View container;
         private ImageButton edit;
         private ImageButton delete;
@@ -173,6 +175,8 @@ public class RecyclerAdapterBacklog extends RecyclerView.Adapter<RecyclerAdapter
             estimateView = (TextView) view.findViewById(R.id.esti_date);
             assignView = (TextView) view.findViewById(R.id.assign_to);
             SprintView = (TextView) view.findViewById(R.id.sprint_to);
+            statusView = (TextView) view.findViewById(R.id.us_status);
+
             container = view.findViewById(R.id.card_view);
             edit =(ImageButton)view.findViewById(R.id.edit);
             delete =(ImageButton)view.findViewById(R.id.delete);

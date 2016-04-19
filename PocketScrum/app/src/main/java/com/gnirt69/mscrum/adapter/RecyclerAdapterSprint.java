@@ -14,18 +14,19 @@ import android.widget.TextView;
 
 import com.gnirt69.mscrum.R;
 import com.gnirt69.mscrum.model.Project;
+import com.gnirt69.mscrum.model.Sprint;
 
 import java.util.List;
 
 
 public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterSprint.ViewHolder> {
 
-    private List<Project> projectList;
+    private List<Sprint> sprintList;
     private Activity activity;
 
 
-    public RecyclerAdapterSprint(Activity activity, List<Project> projects) {
-        this.projectList = projects;
+    public RecyclerAdapterSprint(Activity activity, List<Sprint> sprints) {
+        this.sprintList = sprints;
         this.activity = activity;
     }
 
@@ -34,7 +35,7 @@ public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterS
 
         //inflate your layout and pass it to view holder
         LayoutInflater inflater = activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.item_recycler_pro, viewGroup, false);
+        View view = inflater.inflate(R.layout.item_recycler_sprint, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
 
@@ -45,7 +46,7 @@ public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterS
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         //setting data to view holder elements
-        viewHolder.proName.setText("Project Name:"+ projectList.get(position).getName());
+        viewHolder.sprintName.setText("Project Name:"+ sprintList.get(position).getName());
         viewHolder.startDate.setText("Start Date: 02/10/2016");
         viewHolder.endDate.setText("End Date: 06/10/2016");
         viewHolder.proSM.setText("Assigned To:None");
@@ -113,15 +114,15 @@ public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterS
 
 
     public void removeAt(int position) {
-        projectList.remove(position);
+        sprintList.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, projectList.size());
+        notifyItemRangeChanged(position, sprintList.size());
     }
 
 
     @Override
     public int getItemCount() {
-        return (null != projectList ? projectList.size() : 0);
+        return (null != sprintList ? sprintList.size() : 0);
     }
 
 
@@ -132,7 +133,7 @@ public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterS
 
 
         private ImageView imageView;
-        private TextView proName;
+        private TextView sprintName;
         private TextView startDate;
         private TextView endDate;
         private TextView proSM;
@@ -146,7 +147,7 @@ public class RecyclerAdapterSprint extends RecyclerView.Adapter<RecyclerAdapterS
         public ViewHolder(View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
-            proName = (TextView) view.findViewById(R.id.pro_name);
+            sprintName = (TextView) view.findViewById(R.id.sprint_name);
             startDate = (TextView) view.findViewById(R.id.start_date);
             endDate = (TextView) view.findViewById(R.id.end_date);
             proSM = (TextView) view.findViewById(R.id.pro_sm);

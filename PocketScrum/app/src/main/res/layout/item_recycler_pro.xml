@@ -85,6 +85,13 @@
                 android:gravity="right"
                 android:orientation="horizontal">
                 <ImageButton
+                    android:id="@+id/sprint_list"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:background="@null"
+                    android:src="@drawable/sprint_icon" />
+                <ImageButton
                         android:id="@+id/chart_bd"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -120,6 +127,7 @@
                     android:padding="5dp"
                     android:background="@null"
                     android:src="@drawable/delete_icon" />
+
 
             </LinearLayout>
 

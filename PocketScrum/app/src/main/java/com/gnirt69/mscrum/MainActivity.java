@@ -1,8 +1,12 @@
 package com.gnirt69.mscrum;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,11 +14,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +30,7 @@ import com.gnirt69.mscrum.adapter.SlidingMenuAdapter;
 import com.gnirt69.mscrum.fragment.Fragment1;
 import com.gnirt69.mscrum.fragment.Fragment2;
 import com.gnirt69.mscrum.fragment.Fragment3;
+import com.gnirt69.mscrum.model.DataHolder;
 import com.gnirt69.mscrum.model.ItemSlideMenu;
 
 import java.util.ArrayList;
@@ -40,6 +48,9 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private static boolean signin  = false;
     private TextView textViewTitle;
+    private ImageView userImage;
+    private ImageButton backBtn;
+    private int logoutNow = 0;
 
 
     @Override
@@ -73,6 +84,8 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setCustomView(R.layout.abs_layout);
 
         textViewTitle = (TextView) findViewById(R.id.mytext);
+        userImage = (ImageView)findViewById(R.id.user_image);
+
 
         //item selected
         listViewSliding.setItemChecked(0, true);
@@ -80,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
         drawerLayout.closeDrawer(listViewSliding);
 
         //Display fragment 1 when start
-        replaceFragment(1);
+//        replaceFragment(1);
         //Hanlde on item click
 
         listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
             Log.d("RoleID", ""+roleID);
 
             if(roleID > 0) {
+                signin = true;
                 replaceFragment(roleID - 1);
             }
 
@@ -157,20 +171,90 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Create method replace fragment
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 1) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling logout");
+//            super.onBackPressed();
+            confirmationWarning(0);
+        }
+    }
+
+    public void setTitle(String str) {
+        textViewTitle.setText(str);
+    }
+
+    private void confirmationWarning(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirm");
+        builder.setMessage("Are you sure to logout?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                logout();
+            }
+
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+private void logout() {
+    Intent mStartActivity = new Intent(this, MainActivity.class);
+    int mPendingIntentId = 123456;
+    PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+    AlarmManager mgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+    System.exit(0);
+}
+
 
     public void replaceFragment(int pos) {
+
+        if(signin) {
+            int userType = (int) DataHolder.getInstance().getLogger().getRole().getId();
+            if (userType == 1) {
+                userImage.setImageResource(R.drawable.sys);
+            } else if (userType == 2) {
+                userImage.setImageResource(R.drawable.po);
+            } else if (userType == 3) {
+                userImage.setImageResource(R.drawable.sm);
+            } else if (userType == 4) {
+                userImage.setImageResource(R.drawable.dev);
+            }
+        }
+
+
+
         Fragment fragment = null;
         switch (pos) {
             case 0:
-                textViewTitle.setText("User");
+
                 fragment = new Fragment1();
                 break;
             case 1:
-                textViewTitle.setText("Project");
+
                 fragment = new Fragment2();
                 break;
             case 2:
-                textViewTitle.setText("User Story");
+
                 fragment = new Fragment3();
                 break;
             default:

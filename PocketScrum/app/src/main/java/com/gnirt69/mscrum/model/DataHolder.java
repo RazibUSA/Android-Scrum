@@ -11,6 +11,15 @@ public class DataHolder {
         private List<Project> projectList = new ArrayList<>();
         private List<UserStory> usList = new ArrayList<>();
         private User logger = new User();
+        private Project currentProject = new Project();
+
+    public Project getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(Project currentProject) {
+        this.currentProject = currentProject;
+    }
 
     public List<UserStory> getUsList() {
         return usList;

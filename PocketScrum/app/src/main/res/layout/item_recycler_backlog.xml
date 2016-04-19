@@ -61,6 +61,14 @@
                     android:text="Current Sprint: 3"
                     android:textColor="@android:color/holo_green_dark"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/us_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sprint_to"
+                    android:text="Status: To-Do"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 

@@ -5,6 +5,7 @@ import com.gnirt69.mscrum.model.DataModel;
 import com.gnirt69.mscrum.model.Project;
 import com.gnirt69.mscrum.model.Role;
 import com.gnirt69.mscrum.model.User;
+import com.gnirt69.mscrum.model.UserStory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,6 +126,31 @@ public static Project parseProject(JSONObject obj) throws JSONException{
     return pro;
 
 }
+
+    public  static List<UserStory> parseBacklogData(JSONArray usArr) throws JSONException{
+
+        List<UserStory> proList = new ArrayList<>();
+
+        for(int i = 0; i < usArr.length(); i++) {
+            JSONObject obj = usArr.getJSONObject(i);
+
+            proList.add(parseUserStory(obj));
+
+        }
+
+        return proList;
+    }
+
+    public static UserStory parseUserStory(JSONObject obj) throws JSONException {
+
+        UserStory us = new UserStory();
+        us.setId(obj.optLong("id"));
+        us.setTitle(obj.getString("title"));
+        us.setEstimation(obj.getString("estimation"));
+//        us.setProject();
+        return us;
+
+    }
 
 
 }

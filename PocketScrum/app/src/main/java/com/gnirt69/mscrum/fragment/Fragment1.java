@@ -19,6 +19,7 @@ import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gnirt69.mscrum.MainActivity;
 import com.gnirt69.mscrum.R;
 import com.gnirt69.mscrum.adapter.RecyclerAdapter;
 import com.gnirt69.mscrum.comm.CustomJSONObjectRequest;
@@ -52,6 +53,7 @@ public class Fragment1 extends Fragment {
 
 
     public Fragment1() {
+
     }
 
     @Override
@@ -79,7 +81,7 @@ public class Fragment1 extends Fragment {
 
         fab.setOnClickListener(onAddingListener());
 
-
+        ((MainActivity)getActivity()).setTitle("User");
 
 
         return rootView;
