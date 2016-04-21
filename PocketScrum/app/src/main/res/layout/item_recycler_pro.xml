@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/end_date"
-                    android:text="Sm: Gandu"
+                    android:text="Assign To: None"
                     android:textColor="@android:color/holo_green_dark"
                     android:textStyle="bold" />
 
@@ -84,13 +84,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:orientation="horizontal">
-                <ImageButton
-                    android:id="@+id/sprint_list"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:background="@null"
-                    android:src="@drawable/sprint_icon" />
+
                 <ImageButton
                         android:id="@+id/chart_bd"
                         android:layout_width="40dp"
@@ -105,13 +99,7 @@
                     android:padding="5dp"
                     android:background="@null"
                     android:src="@drawable/user_icon" />
-                <ImageButton
-                    android:id="@+id/back_log"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:background="@null"
-                    android:src="@drawable/backlog_icon" />
+
                 <ImageButton
                     android:id="@+id/edit"
                     android:layout_width="40dp"
@@ -127,6 +115,20 @@
                     android:padding="5dp"
                     android:background="@null"
                     android:src="@drawable/delete_icon" />
+                <ImageButton
+                    android:id="@+id/sprint_list"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:background="@null"
+                    android:src="@drawable/sprint_icon" />
+                <ImageButton
+                    android:id="@+id/back_log"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:background="@null"
+                    android:src="@drawable/backlog_icon" />
 
 
             </LinearLayout>

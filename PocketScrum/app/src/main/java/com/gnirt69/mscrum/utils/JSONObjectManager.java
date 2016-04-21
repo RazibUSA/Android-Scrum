@@ -1,9 +1,13 @@
 package com.gnirt69.mscrum.utils;
 
+import android.util.Log;
+
 import com.gnirt69.mscrum.constant.MSConstants;
+import com.gnirt69.mscrum.model.DataHolder;
 import com.gnirt69.mscrum.model.DataModel;
 import com.gnirt69.mscrum.model.Project;
 import com.gnirt69.mscrum.model.Role;
+import com.gnirt69.mscrum.model.Sprint;
 import com.gnirt69.mscrum.model.User;
 import com.gnirt69.mscrum.model.UserStory;
 
@@ -44,12 +48,29 @@ public class JSONObjectManager {
 
     public static List<User> parseUserListData(JSONArray userArr) throws JSONException {
          List<User> userList = new ArrayList<>();
+         List<User> smList = new ArrayList<>();
+         List<User> devList = new ArrayList<>();
 
        for(int i = 0; i < userArr.length(); i++) {
            JSONObject obj = userArr.getJSONObject(i);
+           User user = parseUser(obj);
+           userList.add(user);
 
-           userList.add(parseUser(obj));
+           if(user.getRole().getId() == 3){
+               smList.add(user);
+           }else if(user.getRole().getId() == 4){
+               devList.add(user);
+           }
 
+        }
+
+        Log.d("SM", "smList.size()");
+        if(smList.size() > 0) {
+            DataHolder.getInstance().setScrumMasterList(smList);
+        }
+
+        if(devList.size() > 0) {
+            DataHolder.getInstance().setDevList(devList);
         }
 
         return userList;
@@ -119,7 +140,19 @@ public static Project parseProject(JSONObject obj) throws JSONException{
             pro.setId(obj.getLong("id"));
             pro.setName(obj.getString("name"));
 
-//            pro.setStartDate(new Date());
+            if(obj.has("managedBy") &&!obj.isNull("managedBy")) {
+
+                Log.d("managedBy","managedBy");
+
+
+                    JSONObject smObj = obj.getJSONObject("managedBy");
+                    if (smObj != null) {
+
+                        pro.setManagedBy(parseUser(smObj));
+
+                    }
+
+            }
 
 
 
@@ -148,6 +181,30 @@ public static Project parseProject(JSONObject obj) throws JSONException{
         us.setTitle(obj.getString("title"));
         us.setEstimation(obj.getString("estimation"));
 //        us.setProject();
+        return us;
+
+    }
+    public  static List<Sprint> parseSprintData(JSONArray usArr) throws JSONException{
+
+        List<Sprint> sprList = new ArrayList<>();
+
+        for(int i = 0; i < usArr.length(); i++) {
+            JSONObject obj = usArr.getJSONObject(i);
+
+            sprList.add(parseSprint(obj));
+
+        }
+
+        return sprList;
+    }
+
+    public static Sprint parseSprint(JSONObject obj) throws JSONException {
+
+        Sprint us = new Sprint();
+        us.setId(obj.optLong("id"));
+        us.setName(obj.getString("name"));
+
+
         return us;
 
     }

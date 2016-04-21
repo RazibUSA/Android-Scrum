@@ -42,5 +42,6 @@ public final class MSConstants {
     public static final String USER_URL = "http://mumscrum.cfapps.io/user/1";
     public static final String USER_LOGIN = "http://mumscrum.cfapps.io/login";
     public static final String PROJECT_URL = "http://mumscrum.cfapps.io/project";
+    public static final String SPRINT_URL = "http://mumscrum.cfapps.io/sprint";
 
 }

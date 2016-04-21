@@ -84,21 +84,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:orientation="horizontal">
-                <ImageButton
-                        android:id="@+id/chart_bd"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:padding="5dp"
-                        android:background="@null"
-                        android:src="@drawable/chart_icon" />
 
-                <ImageButton
-                    android:id="@+id/back_log"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="5dp"
-                    android:background="@null"
-                    android:src="@drawable/backlog_icon" />
                 <ImageButton
                     android:id="@+id/edit"
                     android:layout_width="40dp"
@@ -114,6 +100,21 @@
                     android:padding="5dp"
                     android:background="@null"
                     android:src="@drawable/delete_icon" />
+                <ImageButton
+                    android:id="@+id/chart_bd"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:background="@null"
+                    android:src="@drawable/chart_icon" />
+
+                <ImageButton
+                    android:id="@+id/back_log"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:background="@null"
+                    android:src="@drawable/backlog_icon" />
 
             </LinearLayout>
 

@@ -30,6 +30,7 @@ import com.gnirt69.mscrum.adapter.SlidingMenuAdapter;
 import com.gnirt69.mscrum.fragment.Fragment1;
 import com.gnirt69.mscrum.fragment.Fragment2;
 import com.gnirt69.mscrum.fragment.Fragment3;
+import com.gnirt69.mscrum.fragment.Fragment4;
 import com.gnirt69.mscrum.model.DataHolder;
 import com.gnirt69.mscrum.model.ItemSlideMenu;
 
@@ -139,9 +140,12 @@ public class MainActivity extends ActionBarActivity {
 
             Log.d("RoleID", ""+roleID);
 
-            if(roleID > 0) {
+            if(roleID == 1){
                 signin = true;
-                replaceFragment(roleID - 1);
+                replaceFragment(0);
+            }else {
+                signin = true;
+                replaceFragment(1);
             }
 
         }
@@ -256,6 +260,9 @@ private void logout() {
             case 2:
 
                 fragment = new Fragment3();
+                break;
+            case 3:
+                fragment = new Fragment4();
                 break;
             default:
                 fragment = new Fragment1();

@@ -29,6 +29,7 @@ import com.gnirt69.mscrum.model.DataHolder;
 import com.gnirt69.mscrum.model.Role;
 import com.gnirt69.mscrum.model.User;
 import com.gnirt69.mscrum.model.UserStory;
+import com.gnirt69.mscrum.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +56,7 @@ public class Fragment3 extends Fragment {
 
     private int userType;
     private String userTypeStr;
+    private int RoleID = 0;
 
 
     public Fragment3() {
@@ -65,9 +67,16 @@ public class Fragment3 extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment1, container, false);
 
         // Razib from
+        RoleID =(int)DataHolder.getInstance().getLogger().getRole().getId();
 
 //        setContentView(R.layout.activity_main);
-        usArrayList = DataHolder.getInstance().getUsList();
+        if(RoleID == 2) {
+            usArrayList = DataHolder.getInstance().getUsList();
+        } else if(RoleID == 3){
+            usArrayList = DataHolder.getInstance().getSprintUSList();
+        }else if(RoleID == 4) {
+            usArrayList = DataHolder.getInstance().getDevUSList();
+        }
 
         Log.d("userArrayList size:", ""+usArrayList.size());
 
@@ -85,8 +94,11 @@ public class Fragment3 extends Fragment {
 
         fab.setOnClickListener(onAddingListener());
 
-        ((MainActivity)getActivity()).setTitle("Backlog");
+        ((MainActivity)getActivity()).setTitle("User Story");
 
+        if(RoleID==4){
+            fab.setVisibility(View.INVISIBLE);
+        }
 
         return rootView;
     }
@@ -102,24 +114,42 @@ public class Fragment3 extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.dialog_add); //layout for dialog
-                dialog.setTitle("Add a new User");
-                dialog.setCancelable(false); //none-dismiss when touching outside Dialog
+                int RoleId = (int)DataHolder.getInstance().getLogger().getRole().getId();
+                Log.d("RoleId click",""+RoleId);
+                if( RoleId == 2 ) {
+                    Log.d("RoleId",""+RoleId);
+                    final Dialog dialog = new Dialog(getActivity());
+                    dialog.setContentView(R.layout.dialog_add); //layout for dialog
+                    dialog.setTitle("Add a new User Story");
+                    dialog.setCancelable(false); //none-dismiss when touching outside Dialog
 
-                // set the custom dialog components - texts and image
-                userStoryTitleET = (EditText) dialog.findViewById(R.id.us_title);
-                descriptionET = (EditText) dialog.findViewById(R.id.us_description);
-                estimationET = (EditText) dialog.findViewById(R.id.us_estimation);
+                    // set the custom dialog components - texts and image
+                    userStoryTitleET = (EditText) dialog.findViewById(R.id.us_title);
+                    descriptionET = (EditText) dialog.findViewById(R.id.us_description);
+                    estimationET = (EditText) dialog.findViewById(R.id.us_estimation);
 
 
-                View btnAdd = dialog.findViewById(R.id.btn_ok);
-                View btnCancel = dialog.findViewById(R.id.btn_cancel);
+                    View btnAdd = dialog.findViewById(R.id.btn_ok);
+                    View btnCancel = dialog.findViewById(R.id.btn_cancel);
 
-                btnAdd.setOnClickListener(onConfirmListener(userStoryTitleET,descriptionET,estimationET, dialog));
-                btnCancel.setOnClickListener(onCancelListener(dialog));
+                    btnAdd.setOnClickListener(onConfirmListener(userStoryTitleET, descriptionET, estimationET, dialog));
+                    btnCancel.setOnClickListener(onCancelListener(dialog));
 
-                dialog.show();
+                    dialog.show();
+                } else if(RoleId == 3 ){
+
+                    List<CharSequence> list = new ArrayList<CharSequence>();
+                    for (int i=0;i<20;i++){
+
+                        list.add("test " + i);  // Add the item in the list
+                    }
+
+                    Utils.checkBoxDialog(list,getActivity());
+
+
+                }else {
+                    Log.d("FAB:","Fab" + RoleId);
+                }
             }
         };
     }

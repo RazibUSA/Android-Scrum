@@ -27,9 +27,11 @@ import com.android.volley.toolbox.Volley;
 import com.gnirt69.mscrum.MainActivity;
 import com.gnirt69.mscrum.R;
 import com.gnirt69.mscrum.adapter.RecyclerAdapterPro;
+import com.gnirt69.mscrum.adapter.RecyclerAdapterSprint;
 import com.gnirt69.mscrum.constant.MSConstants;
 import com.gnirt69.mscrum.model.DataHolder;
 import com.gnirt69.mscrum.model.Project;
+import com.gnirt69.mscrum.model.Sprint;
 import com.gnirt69.mscrum.utils.Utils;
 
 import org.json.JSONException;
@@ -39,10 +41,10 @@ import java.util.List;
 
 public class Fragment4 extends Fragment {
     private RecyclerView recyclerView;
-    private RecyclerAdapterPro adapter;
+    private RecyclerAdapterSprint adapter;
     private FloatingActionButton fab;
 
-    private List<Project> projectArrayList;
+    private List<Sprint> sprintArrayList;
 
 
     private EditText projectName;
@@ -67,9 +69,9 @@ public class Fragment4 extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment1, container, false);
 
 
-        projectArrayList = DataHolder.getInstance().getProjectList();
+        sprintArrayList = DataHolder.getInstance().getSprintList();
 
-        Log.d("userArrayList size:", ""+projectArrayList.size());
+        Log.d("userArrayList size:", ""+ sprintArrayList.size());
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyle_view);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -80,7 +82,7 @@ public class Fragment4 extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
 //        setRecyclerViewData(); //adding data to array list
-        adapter = new RecyclerAdapterPro(getActivity(), projectArrayList);
+        adapter = new RecyclerAdapterSprint(getActivity(), sprintArrayList);
         recyclerView.setAdapter(adapter);
 
         fab.setOnClickListener(onAddingListener());
@@ -104,7 +106,7 @@ public class Fragment4 extends Fragment {
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.dialog_add_project); //layout for dialog
-                dialog.setTitle("Add A New Project:");
+                dialog.setTitle("Add A New Sprint:");
                 dialog.setCancelable(false); //none-dismiss when touching outside Dialog
 
                 // set the custom dialog components - texts and image
@@ -158,19 +160,7 @@ public class Fragment4 extends Fragment {
 
                 createProject();
 
-//                registerUser();
-//                getUser();
 
-//                User friend = new User(firstName.getText().toString().trim(), lastName.getText().toString().trim(), gender,
-//                        email.getText().toString().trim(), pass.getText().toString().trim());
-//
-//                //adding new object to arraylist
-//                friendArrayList.add(friend);
-//
-//                //notify data set changed in RecyclerView adapter
-//                adapter.notifyDataSetChanged();
-
-                //close dialog after all
                 dialog.dismiss();
             }
         };
@@ -184,7 +174,7 @@ public class Fragment4 extends Fragment {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                 R.style.AppTheme);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Project...");
+        progressDialog.setMessage("Creating Sprint...");
         progressDialog.show();
         JSONObject Obj = new JSONObject();
 
@@ -197,10 +187,10 @@ public class Fragment4 extends Fragment {
 
             JSONObject loggerOBject = new JSONObject();
 
-            loggerOBject.put("id", String.valueOf(DataHolder.getInstance().getLogger().getId()));
-            Obj.put("owner", loggerOBject);
+            loggerOBject.put("id", String.valueOf(DataHolder.getInstance().getCurrentProject().getId()));
+            Obj.put("project", loggerOBject);
 
-            Log.d("userObj:", Obj.toString());
+            Log.d("Project obj:", Obj.toString());
 
 
         } catch (JSONException e) {
@@ -209,16 +199,16 @@ public class Fragment4 extends Fragment {
         }
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, MSConstants.PROJECT_URL, Obj,
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, MSConstants.SPRINT_URL, Obj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 //                        Toast.makeText(getActivity(),response,Toast.LENGTH_LONG).show();
                         Log.d("response", "Success");
 
-                        Project pro = new Project();
-                        pro.setName(proName);
-                        projectArrayList.add(pro);
+                        Sprint sprint = new Sprint();
+                        sprint.setName(proName);
+                        sprintArrayList.add(sprint);
 
                         //notify data set changed in RecyclerView adapter
                         adapter.notifyDataSetChanged();

@@ -68,7 +68,9 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
         viewHolder.proName.setText("Project Name:"+ projectList.get(position).getName());
         viewHolder.startDate.setText("Start Date: 02/10/2016");
         viewHolder.endDate.setText("End Date: 06/10/2016");
-        viewHolder.proSM.setText("Assigned To:None");
+//        if(projectList.get(position).)
+        if(projectList.get(position).getManagedBy() !=null)
+        viewHolder.proSM.setText("Assigned To:"+projectList.get(position).getManagedBy().getFirstName());
         // Need work later razib
 //        viewHolder.startDate.setText("Start Date:"+ projectList.get(position).getStartDate().toString());
 //        viewHolder.endDate.setText("End Date:"+ projectList.get(position).getEndDate().toString());
@@ -80,23 +82,56 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
             @Override
             public void onClick(View v) {
                 /// button click event
-                List<CharSequence> list = new ArrayList<CharSequence>();
-                for (int i=0;i<20;i++){
-
-                    list.add("test " + i);  // Add the item in the list
-                }
-
-                Utils.checkBoxDialog(list,activity);
+//                List<CharSequence> list = new ArrayList<CharSequence>();
+//                for (int i=0;i<20;i++){
+//
+//                    list.add("test " + i);  // Add the item in the list
+//                }
+//
+//                Utils.checkBoxDialog(list,activity);
             }
         });
+
+        viewHolder. sprintBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /// button click event
+                goToAnotherFragment(currentPosition, 3);
+            }
+        });
+
+
         viewHolder. assignSMBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 /// button click event
-                final Dialog dialog = new Dialog(activity);
-                dialog.setTitle("Button test " );
-                dialog.setCancelable(true);
-                dialog.show();
+
+               final List<User> scrumMasterList = DataHolder.getInstance().getScrumMasterList();
+                String[] array = new String[scrumMasterList.size()];
+                int index = 0;
+                for (User value : scrumMasterList) {
+                    array[index] = (String) (value.getFirstName() + " "+ value.getLastName());
+                    Log.d("array", ""+array[index].toString());
+                    index++;
+
+                }
+                Log.d("scrumMasterList", ""+scrumMasterList.size());
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle("Select Scrum Master");
+
+                builder.setSingleChoiceItems(array, -1, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        dialog.dismiss();
+                        AssignScrumMaster(currentPosition, scrumMasterList.get(item));
+
+
+                    }
+                });
+//                final AlertDialog levelDialog = builder.create();
+                builder.show();
 
             }
         });
@@ -104,7 +139,7 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
             @Override
             public void onClick(View v) {
                 /// button click event
-                getBacklogList(currentPosition);
+                goToAnotherFragment(currentPosition, 2);
 
             }
         });
@@ -165,9 +200,79 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
         AlertDialog alert = builder.create();
         alert.show();
     }
+//
+  private void AssignScrumMaster(final int pos, final User sMaster){
 
 
-    private void getBacklogList(int pos){
+    final ProgressDialog progressDialog = new ProgressDialog(activity,
+            R.style.AppTheme);
+    progressDialog.setIndeterminate(true);
+    progressDialog.setMessage("Assign Scrum Master...");
+    progressDialog.show();
+
+    final Project currentProject = projectList.get(pos);
+    DataHolder.getInstance().setCurrentProject(currentProject);
+
+    String URL = MSConstants.PROJECT_URL+"/"+currentProject.getId();
+    Log.d("USL:", URL);
+
+      JSONObject Obj = new JSONObject();
+
+      try {
+//          Obj.put("id", String.valueOf(currentProject.getId()));
+          Obj.put("name", currentProject.getName());
+
+          JSONObject loggerOBject = new JSONObject();
+
+          loggerOBject.put("id", String.valueOf(sMaster.getId()));
+          Obj.put("managedBy", loggerOBject);
+
+          Log.d("project:", Obj.toString());
+
+
+      } catch (JSONException e) {
+          Log.d("JSONException", "JSONException");
+          e.printStackTrace();
+      }
+
+    RequestQueue requestQueue = Volley.newRequestQueue(activity);
+    JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.PUT, URL,Obj,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+//                        Toast.makeText(getActivity(),response,Toast.LENGTH_LONG).show();
+                    Log.d("response", "Success");
+
+
+                    projectList.get(pos).setManagedBy(sMaster);
+                    //notify data set changed in RecyclerView adapter
+                    notifyDataSetChanged();
+                    progressDialog.dismiss();
+
+
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(activity,error.toString(), Toast.LENGTH_LONG).show();
+                    Log.d("Error", "Nope"+error.toString());
+                    progressDialog.dismiss();
+                }
+            }){
+
+
+    };
+
+    Log.d("stringRequest", ":" +stringRequest);
+
+    requestQueue.add(stringRequest);
+}
+
+
+
+ //
+    private void goToAnotherFragment(int pos, final int fragmentNo){
 
 
         final ProgressDialog progressDialog = new ProgressDialog(activity,
@@ -200,13 +305,20 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
                                 if (bcList != null && bcList.length() > 0) {
                                     DataHolder.getInstance().setUsList(JSONObjectManager.parseBacklogData(bcList));
                                 }
+
+                                JSONArray sprintArr = (JSONArray) userData.get("sprintList");
+                                Log.d("sprintArr", "Success"+sprintArr.length());
+                                if (sprintArr != null && sprintArr.length() > 0) {
+                                    DataHolder.getInstance().setSprintList(JSONObjectManager.parseSprintData(sprintArr));
+                                }
+
                             }catch (JSONException e) {
                                 Log.d("JSONException", ""+e.toString());
 //                            e.printStackTrace();
                             }
 
                         }
-                        switchToBacklog();
+                        switchScreen(fragmentNo);
                         progressDialog.dismiss();
 
 
@@ -226,17 +338,13 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
 
         Log.d("stringRequest", ":" +stringRequest);
 
-
-
         requestQueue.add(stringRequest);
     }
 
 
+    public void switchScreen(int pos){
 
-
-    public void switchToBacklog(){
-
-        ((MainActivity)activity). replaceFragment(2);
+        ((MainActivity)activity). replaceFragment(pos);
     }
 
     public void removeAt(int position) {
@@ -265,6 +373,7 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
         private TextView proSM;
 
         private View container;
+        private ImageButton sprintBtn;
         private ImageButton bdChartBtn;
         private ImageButton assignSMBtn;
         private ImageButton backlogBtn;
@@ -280,11 +389,21 @@ public class RecyclerAdapterPro extends RecyclerView.Adapter<RecyclerAdapterPro.
             proSM = (TextView) view.findViewById(R.id.pro_sm);
 
             container = view.findViewById(R.id.card_view);
+            sprintBtn = (ImageButton)view.findViewById(R.id.sprint_list);
             backlogBtn =(ImageButton)view.findViewById(R.id.back_log);
             bdChartBtn =(ImageButton)view.findViewById(R.id.chart_bd);
             assignSMBtn =(ImageButton)view.findViewById(R.id.add_sm);
             edit =(ImageButton)view.findViewById(R.id.edit);
             delete =(ImageButton)view.findViewById(R.id.delete);
+
+            if(DataHolder.getInstance().getLogger().getRole().getId() > 2) {
+                backlogBtn.setVisibility(View.INVISIBLE);
+                bdChartBtn.setVisibility(View.INVISIBLE);
+                assignSMBtn.setVisibility(View.INVISIBLE);
+                edit.setVisibility(View.INVISIBLE);
+                delete.setVisibility(View.INVISIBLE);
+            }
+
         }
     }
 }
